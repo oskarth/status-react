@@ -1,10 +1,12 @@
 (ns status-im.components.nfc
   (:require [cljs.spec.alpha :as s]
-            [status-im.utils.platform :as platform]))
+            [status-im.utils.platform :as platform]
+            [status-im.utils.modules :as modules]))
+
 
 (def class
   (when platform/android?
-    (js/require "nfc-react-native")))
+    (modules/require-js "nfc-react-native")))
 
 (def android-only-error "NFC API is available only on Android")
 

@@ -7,12 +7,16 @@
             [status-im.chat.views.input.validation-messages :as chat-validation-messages]
             [status-im.chat.views.choosers.choose-contact :as choose-contact]
             [status-im.components.qr-code :as qr]
+            [status-im.chat.views.geolocation.views :as geolocation]
             [status-im.utils.handlers :refer [register-handler]]
             [taoensso.timbre :as log]))
 
 (defn json->clj [json]
   (when-not (= json "undefined")
     (js->clj (.parse js/JSON json) :keywordize-keys true)))
+
+(defn parameter-box-separator []
+  [view {:height 1 :background-color "#c1c7cbb7" :opacity 0.5}])
 
 (def elements
   {:view               components/view
@@ -28,7 +32,13 @@
    :activity-indicator components/activity-indicator
    :bridged-web-view   chat-web-view/bridged-web-view
    :validation-message chat-validation-messages/validation-message
-   :choose-contact     choose-contact/choose-contact-view})
+   :choose-contact     choose-contact/choose-contact-view
+   :separator            parameter-box-separator
+   :current-location-map geolocation/current-location-map-view
+   :current-location     geolocation/current-location-view
+   :places-nearby        geolocation/places-nearby-view
+   :places-search        geolocation/places-search
+   :dropped-pin          geolocation/dropped-pin})
 
 (defn get-element [n]
   (elements (keyword (.toLowerCase n))))

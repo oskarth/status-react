@@ -151,11 +151,11 @@
                 seq-arg (get-in db [:chats current-chat-id :seq-argument-input-text])
                 to      (get-in db [:contacts current-chat-id :address])
                 params  {:parameters {:args   args
-                                      :bot-db bot-db}
+                                      :bot-db bot-db
+                                      :seqArg seq-arg}
                          :context    (merge {:data data
                                              :from current-account-id
-                                             :to   to
-                                             :seqArg seq-arg}
+                                             :to   to}
                                             (input-model/command-dependent-context-params command))}]
             (status/call-jail
               {:jail-id  (or bot owner-id current-chat-id)

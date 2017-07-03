@@ -216,6 +216,10 @@
    :places-nearby                         "Places nearby"
    :search-results                        "Search results"
    :dropped-pin                           "Dropped pin"
+   :location                              "Location"
+   :open-map                              "Open Map"
+   :sharing-copy-to-clipboard-address     "Copy the Address"
+   :sharing-copy-to-clipboard-coordinates "Copy coordinates"
 
    ;new-group
    :group-chat-name                       "Chat name"

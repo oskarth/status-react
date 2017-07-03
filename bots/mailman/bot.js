@@ -42,7 +42,7 @@ status.command({
         suggestions: locationsSuggestions
     }],
     preview: function (params) {
-        var address =  decodeURIComponent(params.address);
+        var address = params.address.split("&amp;");
         var text = status.components.text(
             {
                 style: {
@@ -53,10 +53,10 @@ status.command({
                     fontFamily: "font",
                     color: "black"
                 }
-            }, address);
-        var uri = "https://maps.googleapis.com/maps/api/staticmap?center="
-            + address
-            + "&size=176x58&maptype=roadmap&key=AIzaSyBNsj1qoQEYPb3IllmWMAscuXW0eeuYqAA&language=en"
+            }, address[0]);
+        var uri = "https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/" +
+        address[1] + "," + address[2] + ",10,20" +
+        "/175x58?access_token=pk.eyJ1Ijoic3RhdHVzaW0iLCJhIjoiY2oydmtnZjRrMDA3czMzcW9kemR4N2lxayJ9.Rz8L6xdHBjfO8cR3CDf3Cw";
 
         var image = status.components.image(
             {

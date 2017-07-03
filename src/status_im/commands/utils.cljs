@@ -1,7 +1,7 @@
 (ns status-im.commands.utils
   (:require [clojure.set :as set]
             [clojure.walk :as w]
-            [re-frame.core :refer [dispatch trim-v debug]]
+            [re-frame.core :refer [dispatch trim-v]]
             [status-im.components.react :as components]
             [status-im.chat.views.input.web-view :as chat-web-view]
             [status-im.chat.views.input.validation-messages :as chat-validation-messages]
@@ -16,23 +16,23 @@
     (js->clj (.parse js/JSON json) :keywordize-keys true)))
 
 (defn parameter-box-separator []
-  [view {:height 1 :background-color "#c1c7cbb7" :opacity 0.5}])
+  [components/view {:height 1 :background-color "#c1c7cbb7" :opacity 0.5}])
 
 (def elements
-  {:view               components/view
-   :text               components/text
-   :text-input         components/text-input
-   :image              components/image
-   :qr-code            qr/qr-code
-   :linking            components/linking
-   :slider             components/slider
-   :scroll-view        components/scroll-view
-   :web-view           components/web-view
-   :touchable          components/touchable-highlight
-   :activity-indicator components/activity-indicator
-   :bridged-web-view   chat-web-view/bridged-web-view
-   :validation-message chat-validation-messages/validation-message
-   :choose-contact     choose-contact/choose-contact-view
+  {:view                 components/view
+   :text                 components/text
+   :text-input           components/text-input
+   :image                components/image
+   :qr-code              qr/qr-code
+   :linking              components/linking
+   :slider               components/slider
+   :scroll-view          components/scroll-view
+   :web-view             components/web-view
+   :touchable            components/touchable-highlight
+   :activity-indicator   components/activity-indicator
+   :bridged-web-view     chat-web-view/bridged-web-view
+   :validation-message   chat-validation-messages/validation-message
+   :choose-contact       choose-contact/choose-contact-view
    :separator            parameter-box-separator
    :current-location-map geolocation/current-location-map-view
    :current-location     geolocation/current-location-view
@@ -50,7 +50,7 @@
     #(dispatch [:suggestions-event! (update event 0 keyword) %])))
 
 (defn check-events [m]
-  (let [ks  (set (keys m))
+  (let [ks (set (keys m))
         evs (set/intersection ks events)]
     (reduce #(update %1 %2 wrap-event) m evs)))
 

@@ -24,9 +24,13 @@
                 #(reset! cur-loc-geocoded nil))
       true)))
 
-(defn place-item [{:keys [title address pin-style]}]
+(defn place-item [{:keys [title address pin-style] [latitude longitude] :center}]
   [touchable-highlight {:on-press #(do
-                                     (dispatch [:set-command-argument [0 (gstr/urlEncode (or address title)) false]])
+                                     (dispatch [:set-command-argument [0
+                                                                       (str (or address title)
+                                                                            "&amp;" latitude
+                                                                            "&amp;" longitude)
+                                                                       false]])
                                      (dispatch [:send-seq-argument]))}
    [view (st/place-item-container address)
     [view st/place-item-title-container
@@ -79,8 +83,8 @@
                  [view st/location-container
                   [text {:style st/location-container-title}
                    (label :t/your-current-location)]
-                  (let [{:keys [place_name] :as feature} (get-in @cur-loc-geocoded [:features 0])]
-                    [place-item {:title (:text feature) :address place_name}])])))})))
+                  (let [{:keys [place_name center] :as feature} (get-in @cur-loc-geocoded [:features 0])]
+                    [place-item {:title (:text feature) :address place_name :center center}])])))})))
 
 (defn places-nearby-view []
   (let [geolocation      (subscribe [:get :geolocation])
@@ -96,10 +100,10 @@
                 [text {:style st/location-container-title}
                  (label :t/places-nearby)]
                 (doall
-                  (map (fn [{:keys [text place_name] :as feature}]
+                  (map (fn [{:keys [text place_name center] :as feature}]
                          ^{:key feature}
                          [view
-                          [place-item {:title text :address place_name}]
+                          [place-item {:title text :address place_name :center center}]
                           (when (not= feature (last (:features @cur-loc-geocoded)))
                             [view st/item-separator])])
                        (:features @cur-loc-geocoded)))])))})))
@@ -112,7 +116,6 @@
                                                #(reset! places (json->clj %))
                                                #(reset! places nil)))]
     (fn []
-      (dispatch [:set-in [:debug :places-search] @places])
       (let [_ @result]
         (when @places
           (let [features-count (count (:features @places))]
@@ -120,10 +123,10 @@
              [text {:style st/location-container-title}
               (label :t/search-results) " " [text {:style st/location-container-title-count} features-count]]
              (doall
-               (map (fn [{:keys [place_name] :as feature}]
+               (map (fn [{:keys [place_name center] :as feature}]
                       ^{:key feature}
                       [view
-                       [place-item {:title place_name}]
+                       [place-item {:title place_name :center center}]
                        (when (not= feature (last (:features @places)))
                          [view st/item-separator])])
                     (:features @places)))]))))))
@@ -136,7 +139,6 @@
         result          (reaction (when @pin-location (get-places @pin-location pin-geolocation)))
         result2         (reaction (when @pin-location (get-places @pin-location pin-nearby true)))]
     (fn []
-      (dispatch [:set-in [:debug :pin-location] @pin-location])
       (let [_ @result _ @result2]
         [view
          [view
@@ -154,18 +156,18 @@
             [view st/location-container
              [text {:style st/location-container-title}
               (label :t/dropped-pin)]
-             (let [{:keys [place_name] :as feature} (get-in @pin-geolocation [:features 0])]
-               [place-item {:title place_name :pin-style st/black-pin}])]
+             (let [{:keys [place_name center] :as feature} (get-in @pin-geolocation [:features 0])]
+               [place-item {:title place_name :pin-style st/black-pin :center center}])]
             [view st/separator]])
          (when (and @pin-nearby (> (count (:features @pin-nearby)) 0))
            [view st/location-container
             [text {:style st/location-container-title}
              (label :t/places-nearby)]
             (doall
-              (map (fn [{:keys [text place_name] :as feature}]
+              (map (fn [{:keys [text place_name center] :as feature}]
                      ^{:key feature}
                      [view
-                      [place-item {:title text :address place_name}]
+                      [place-item {:title text :address place_name :center center}]
                       (when (not= feature (last (:features @pin-nearby)))
                         [view st/item-separator])])
                    (:features @pin-nearby)))])]))))

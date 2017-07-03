@@ -35,5 +35,5 @@
                :schemaVersion 8
                :migration     v8/migration}
               {:schema        v9/schema
-               :schemaVersion 8
+               :schemaVersion 9
                :migration     v9/migration}])

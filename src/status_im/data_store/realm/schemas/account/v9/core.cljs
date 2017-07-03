@@ -1,4 +1,4 @@
-(ns status-im.data-store.realm.schemas.account.v8.core
+(ns status-im.data-store.realm.schemas.account.v9.core
   (:require [status-im.data-store.realm.schemas.account.v4.chat :as chat]
             [status-im.data-store.realm.schemas.account.v1.chat-contact :as chat-contact]
             [status-im.data-store.realm.schemas.account.v6.command :as command]
@@ -6,7 +6,7 @@
             [status-im.data-store.realm.schemas.account.v7.contact :as contact]
             [status-im.data-store.realm.schemas.account.v1.discover :as discover]
             [status-im.data-store.realm.schemas.account.v1.kv-store :as kv-store]
-            [status-im.data-store.realm.schemas.account.v4.message :as message]
+            [status-im.data-store.realm.schemas.account.v9.message :as message]
             [status-im.data-store.realm.schemas.account.v7.pending-message :as pending-message]
             [status-im.data-store.realm.schemas.account.v1.processed-message :as processed-message]
             [status-im.data-store.realm.schemas.account.v1.request :as request]
@@ -35,4 +35,5 @@
              local-storage/schema])
 
 (defn migration [old-realm new-realm]
-  (log/debug "migrating v8 account database: " old-realm new-realm))
+  (log/debug "migrating v9 account database: " old-realm new-realm)
+  (message/migration old-realm new-realm))

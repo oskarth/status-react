@@ -263,7 +263,7 @@
 
 (defmethod nav/preload-data! :new-public-group
   [db]
-  (dissoc db :public-group/topic))
+  (assoc db :public-group/topic nil))
 
 (defn move-item [v from to]
   (if (< from to)

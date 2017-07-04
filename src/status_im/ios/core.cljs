@@ -145,5 +145,4 @@
   (dispatch [:listen-to-network-status!])
   (dispatch [:initialize-crypt])
   (dispatch [:initialize-geth])
-  (dispatch [:load-user-phone-number])
   (.registerComponent app-registry "StatusIm" #(r/reactify-component app-root)))

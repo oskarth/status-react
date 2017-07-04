@@ -84,7 +84,7 @@
 (register-handler ::remove-transactions
   (fn [db [_ hashes]]
     (-> db
-        (dissoc :transactions)
+        (assoc :transactions nil)
         (update :transactions-queue #(apply dissoc % hashes)))))
 
 (register-handler ::remove-transaction
@@ -215,7 +215,7 @@
 
 (register-handler :clear-selected-transaction
   (fn [db _]
-    (dissoc db :selected-transaction)))
+    (assoc db :selected-transaction nil)))
 
 (def attempts-limit 3)
 

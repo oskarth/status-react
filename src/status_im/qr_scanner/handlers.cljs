@@ -39,7 +39,7 @@
 (defn clear-qr-request [db [_ context]]
   (-> db
       (update :qr-codes dissoc context)
-      (dissoc :current-qr-context)))
+      (assoc :current-qr-context nil)))
 
 (register-handler :set-qr-code
   (-> (u/side-effect! handle-qr-request)

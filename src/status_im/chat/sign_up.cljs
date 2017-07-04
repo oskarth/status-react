@@ -55,7 +55,7 @@
 (defn stop-listening-confirmation-code-sms [db]
   (when-let [listener (:confirmation-code-sms-listener db)]
     (remove-sms-listener listener)
-    (dissoc db :confirmation-code-sms-listener)))
+    (assoc db :confirmation-code-sms-listener nil)))
 
 ;; -- Send confirmation code and synchronize contacts---------------------------
 (defn on-sync-contacts []

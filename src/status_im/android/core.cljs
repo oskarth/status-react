@@ -176,5 +176,4 @@
   (dispatch [:initialize-crypt])
   (dispatch [:initialize-geth])
   (status/set-soft-input-mode status/adjust-resize)
-  (dispatch [:load-user-phone-number])
   (init-back-button-handler!))

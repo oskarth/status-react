@@ -59,11 +59,10 @@
 (register-handler :initialize-account-db
   (fn [db _]
     (-> db
-        (assoc :current-chat-id console-chat-id)
-        (dissoc :edit-mode
-                :transactions
-                :transactions-queue
-                :new-contact-identity))))
+        (assoc :current-chat-id console-chat-id
+               :transactions nil
+               :transactions-queue nil
+               :new-contact-identity nil))))
 
 (register-handler :initialize-account
   (u/side-effect!
@@ -198,9 +197,3 @@
         permissions
         then
         else))))
-
-;; -- User data --------------------------------------------------------------
-(register-handler :load-user-phone-number
-  (fn [db [_]]
-    ;; todo fetch phone number from db
-    (assoc db :user-phone-number "123")))

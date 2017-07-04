@@ -49,9 +49,8 @@
 
 (register-handler :remove-contacts-click-handler
   (fn [db]
-    (dissoc db
-            :contacts-click-handler
-            :contacts-click-action)))
+    (assoc db :contacts-click-handler nil
+              :contacts-click-action  nil)))
 
 (defn save-contact
   [_ [_ contact]]
@@ -401,8 +400,7 @@
   (after #(dispatch [:navigate-to :contact-toggle-list]))
   (fn [db [_ group-type]]
     (->
-      (assoc db :contact-group nil
-                :group-type group-type
+      (assoc db :group-type group-type
                 :selected-contacts #{}
                 :new-chat-name "")
       (assoc-in [:toolbar-search :show] nil)

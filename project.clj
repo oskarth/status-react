@@ -64,7 +64,7 @@
                                                         :optimizations :none
                                                         :target        :nodejs}}]}}
              :prod {:cljsbuild {:builds [{:id           "ios"
-                                          :source-paths ["src" "protocol" "env/prod"]
+                                          :source-paths ["src" "protocol/src" "env/prod"]
                                           :compiler     {:output-to          "index.ios.js"
                                                          :main               "env.ios.main"
                                                          :output-dir         "target/ios-prod"
@@ -75,7 +75,7 @@
                                                          :closure-defines    {"goog.DEBUG" false}
                                                          :parallel-build true}}
                                          {:id           "android"
-                                          :source-paths ["src" "protocol" "env/prod"]
+                                          :source-paths ["src" "protocol/src" "env/prod"]
                                           :compiler     {:output-to          "index.android.js"
                                                          :main               "env.android.main"
                                                          :output-dir         "target/android-prod"

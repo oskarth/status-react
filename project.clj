@@ -8,7 +8,7 @@
                  [reagent "0.6.0" :exclusions [cljsjs/react cljsjs/react-dom cljsjs/react-dom-server]]
                  [re-frame "0.7.0"]
                  [natal-shell "0.3.0"]
-                 [com.andrewmcveigh/cljs-time "0.4.0"]
+                 [com.andrewmcveigh/cljs-time "0.5.0"]
                  [tailrecursion/cljs-priority-map "1.2.0"]
                  [com.taoensso/timbre "4.7.4"]
                  [com.google.guava/guava "21.0"]]

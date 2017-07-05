@@ -6,7 +6,9 @@
   (if (and (exists? js/window) (exists? js/require))
     (if (contains? @modules module-name)
       (get @modules module-name)
-      (let [module (js/require module-name)]
-        (swap! modules assoc module-name module)
-        module))
+      (try
+        (let [module (js/require module-name)]
+          (swap! modules assoc module-name module)
+          module)
+        (catch js/Error _  #js {})))
     #js {}))

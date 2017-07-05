@@ -1,53 +1,33 @@
 (ns status-im.protocol.test.node
-  (:require [cljs.test :refer-macros [deftest is]]
-            [status-im.protocol.web3.utils :as u]
-            [clojure.string :as s]))
-
-;; dependencies
-(def fs (js/require "fs"))
-(def child-process (js/require "child_process"))
-(def sleep (.-sleep (js/require "sleep")))
+  (:require [clojure.string :as s]
+            [status-im.protocol.test.utils :as utils]))
 
 (def build-dir "target")
-
-(def exist? (.-existsSync fs))
-
-(defn exec-sync [command options]
-  (.execSync child-process command (clj->js options)))
-
-(defn exec [command options]
-  (.exec child-process command (clj->js options)))
-
-(defn spawn-sync [command args options]
-  (.spawnSync child-process command (clj->js args) (clj->js options)))
-
-(defn spawn [command args options]
-  (.spawn child-process command (clj->js args) (clj->js options)))
 
 (defonce node-process (atom nil))
 
 (defn prepare-env! []
-  (when-not (exist? build-dir)
+  (when-not (utils/exist? build-dir)
     (println "mkdir " build-dir)
-    (.mkdirSync fs build-dir))
+    (utils/mkdir-sync build-dir))
   (let [dir  (s/join "/" [build-dir "status-go"])
         opts #js {:cwd dir}]
-    (if-not (exist? dir)
-      (exec-sync "git clone git@github.com:status-im/status-go.git -b bug/whisper-on-geth1.6.1" #js {:cwd build-dir})
-      (exec-sync "git pull origin bug/whisper-on-geth1.6.1" opts))
+    (if-not (utils/exist? dir)
+      (utils/exec-sync "git clone git@github.com:status-im/status-go.git -b bug/whisper-on-geth1.6.1" #js {:cwd build-dir})
+      (utils/exec-sync "git pull origin bug/whisper-on-geth1.6.1" opts))
     (println "Compile statusgo...")
-    (exec-sync "make statusgo" opts)
+    (utils/exec-sync "make statusgo" opts)
     (println "Done.")))
 
 (defn start! []
   (when-not @node-process
     (println "Start wnode...")
     (let [dir (s/join "/" [build-dir "status-go" "build" "bin"])]
-      (let [proc (spawn "./statusd"
+      (let [proc (utils/spawn "./statusd"
                         ["wnode" "--http" "--httpport" "8645"]
                         {:cwd dir})]
         (reset! node-process proc)
-        (sleep 5)
+        (utils/sleep 5)
         (println "Done.")))))
 
 

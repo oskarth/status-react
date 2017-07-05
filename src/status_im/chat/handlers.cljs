@@ -100,7 +100,7 @@
 (register-handler :cancel-command
   (fn [{:keys [current-chat-id] :as db} _]
     (-> db
-        (assoc :canceled-command nil)
+        (dissoc :canceled-command)
         (assoc-in [:chats current-chat-id :command-input] {})
         (update-in [:chats current-chat-id :input-text] safe-trim))))
 
@@ -202,7 +202,7 @@
   ([{:keys [messages current-chat-id] :as db} _]
    (-> db
        (assoc-in [:chats current-chat-id :messages] messages)
-       (assoc :messages nil))))
+       (dissoc :messages))))
 
 (defn load-commands!
   [{:keys [current-chat-id]}]
@@ -229,8 +229,8 @@
                       (into (priority-map-by compare-chats))))]
 
     (-> db
-        (assoc :chats chats'
-               :loaded-chats nil)
+        (assoc :chats chats')
+        (dissoc :loaded-chats)
         (init-console-chat true))))
 
 (defn load-chats!

@@ -11,8 +11,8 @@
                                   :count        (count messages)}]))
                       (into {}))]
     (-> db
-        (assoc :unviewed-messages messages
-               :raw-unviewed-messages nil))))
+        (assoc :unviewed-messages messages)
+        (dissoc :raw-unviewed-messages))))
 
 (defn load-messages! [db]
   (let [messages (messages/get-unviewed)]
@@ -34,4 +34,4 @@
 (register-handler :remove-unviewed-messages
   (path :unviewed-messages)
   (fn [db [_ chat-id]]
-    (assoc db chat-id nil)))
+    (dissoc db chat-id)))

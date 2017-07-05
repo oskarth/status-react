@@ -26,7 +26,7 @@
 
 (defn -preload-data! [{:keys [was-modal?] :as db} & args]
   (if was-modal?
-    (assoc db :was-modal? nil)
+    (dissoc db :was-modal?) ;;TODO check how it worked with this bug
     (apply preload-data! db args)))
 
 (register-handler :navigate-forget

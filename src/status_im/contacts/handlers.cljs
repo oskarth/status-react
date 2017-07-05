@@ -49,8 +49,9 @@
 
 (register-handler :remove-contacts-click-handler
   (fn [db]
-    (assoc db :contacts-click-handler nil
-              :contacts-click-action  nil)))
+    (dissoc db
+            :contacts-click-handler
+            :contacts-click-action)))
 
 (defn save-contact
   [_ [_ contact]]

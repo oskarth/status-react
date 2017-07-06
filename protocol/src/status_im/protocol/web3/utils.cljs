@@ -19,7 +19,8 @@
 (defn timestamp []
   (to-long (now)))
 
-(def chance (new (js/require "chance")))
+(def Chance (js/require "chance"))
+(def chance (Chance.))
 
 (defn id []
   (str (timestamp) "-" (.guid chance)))

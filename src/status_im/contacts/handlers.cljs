@@ -13,8 +13,7 @@
             [status-im.i18n :refer [label]]
             [taoensso.timbre :as log]
             [cljs.reader :refer [read-string]]
-            [status-im.utils.js-resources :as js-res]
-            [status-im.utils.modules :as modules]))
+            [status-im.utils.js-resources :as js-res]))
 
 (defmethod nav/preload-data! :group-contacts
   [db [_ _ group show-search?]]
@@ -123,7 +122,7 @@
 (register-handler :load-contacts load-contacts!)
 
 ;; TODO see https://github.com/rt2zz/react-native-contacts/issues/45
-(def react-native-contacts (modules/require-js "react-native-contacts"))
+(def react-native-contacts (js/require "react-native-contacts"))
 
 (defn contact-name [contact]
   (->> contact

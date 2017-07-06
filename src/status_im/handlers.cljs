@@ -30,8 +30,7 @@
     [status-im.constants :refer [console-chat-id]]
     [status-im.utils.ethereum-network :as enet]
     [status-im.utils.instabug :as inst]
-    [status-im.utils.platform :as p]
-    [status-im.utils.modules :as modules]))
+    [status-im.utils.platform :as p]))
 
 ;; -- Common --------------------------------------------------------------
 
@@ -102,7 +101,7 @@
         (dispatch [:load-commands!])
         (when callback (callback))))))
 
-(def ecc (modules/require-js "eccjs"))
+(def ecc (js/require "eccjs"))
 
 (register-handler :initialize-crypt
   (u/side-effect!

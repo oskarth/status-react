@@ -4,16 +4,15 @@
             [status-im.utils.utils :as u
              :refer [get-react-property get-class adapt-class]]
             [status-im.utils.platform :refer [platform-specific ios?]]
-            [status-im.i18n :as i18n]
-            [status-im.utils.modules :as modules]))
+            [status-im.i18n :as i18n]))
 
-(def react-native (modules/require-js "react-native"))
+(def react-native (js/require "react-native"))
 (def native-modules (.-NativeModules react-native))
 (def device-event-emitter (.-DeviceEventEmitter react-native))
-(def dismiss-keyboard! (modules/require-js "dismissKeyboard"))
-(def orientation (modules/require-js "react-native-orientation"))
+(def dismiss-keyboard! (js/require "dismissKeyboard"))
+(def orientation (js/require "react-native-orientation"))
 (def back-android (get-react-property "BackAndroid"))
-(def drawer (modules/require-js "react-native-drawer-layout"))
+(def drawer (js/require "react-native-drawer-layout"))
 
 (def splash-screen (.-SplashScreen native-modules))
 
@@ -110,7 +109,7 @@
   (js->clj (.get dimensions name) :keywordize-keys true))
 
 (defn linear-gradient [props]
-  (let [class    (modules/require-js "react-native-linear-gradient")
+  (let [class    (js/require "react-native-linear-gradient")
         gradient (adapt-class (.-default class))]
     [gradient props]))
 
@@ -119,7 +118,7 @@
 
 ;; Image picker
 
-(def image-picker-class (modules/require-js "react-native-image-crop-picker"))
+(def image-picker-class (js/require "react-native-image-crop-picker"))
 
 (defn show-access-error [o]
   (when (= "ERROR_PICKER_UNAUTHORIZED_KEY" (aget o "code")) ; Do not show error when user cancel selection
@@ -133,7 +132,7 @@
         (.then images-fn)
         (.catch show-access-error))))
 
-(def swiper (adapt-class (modules/require-js "react-native-swiper")))
+(def swiper (adapt-class (js/require "react-native-swiper")))
 
 ;; Clipboard
 
@@ -145,7 +144,7 @@
 
 ;; Emoji
 
-(def emoji-picker-class (modules/require-js "react-native-emoji-picker"))
+(def emoji-picker-class (js/require "react-native-emoji-picker"))
 
 (def emoji-picker
   (let [emoji-picker (.-default emoji-picker-class)]
@@ -153,7 +152,7 @@
 
 ;; Autolink
 
-(def autolink-class (r/adapt-react-class (.-default (modules/require-js "react-native-autolink"))))
+(def autolink-class (r/adapt-react-class (.-default (js/require "react-native-autolink"))))
 
 (defn autolink [opts]
   (r/as-element
@@ -162,7 +161,7 @@
 ;; HTTP Bridge
 
 (def http-bridge
-  (modules/require-js "react-native-http-bridge"))
+  (js/require "react-native-http-bridge"))
 
 ;; KeyboardAvoidingView
 

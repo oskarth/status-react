@@ -4,10 +4,9 @@
             [status-im.i18n :refer [label]]
             [status-im.utils.platform :refer [platform-specific ios?]]
             [re-frame.core :refer [dispatch]]
-            [status-im.components.react :refer [view touchable-highlight text]]
-            [status-im.utils.modules :as modules]))
+            [status-im.components.react :refer [view touchable-highlight text]]))
 
-(def react-native-popup-menu (modules/require-js "react-native-popup-menu"))
+(def react-native-popup-menu (js/require "react-native-popup-menu"))
 
 (defn get-property [name]
   (aget react-native-popup-menu name))

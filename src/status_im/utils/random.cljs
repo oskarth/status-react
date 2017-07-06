@@ -1,10 +1,9 @@
-(ns status-im.utils.random
-  (:require [status-im.utils.modules :as modules]))
+(ns status-im.utils.random)
 
 (defn timestamp []
   (.getTime (js/Date.)))
  
-(def Chance (modules/require-js "chance"))
+(def Chance (js/require "chance"))
 
 (def chance (Chance.))
 

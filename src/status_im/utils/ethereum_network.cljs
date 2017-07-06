@@ -1,9 +1,8 @@
 (ns status-im.utils.ethereum-network
   (:require [status-im.constants :as c]
-            [status-im.utils.web-provider :as w3]
-            [status-im.utils.modules :as modules]))
+            [status-im.utils.web-provider :as w3]))
 
-(def Web3 (modules/require-js "web3"))
+(def Web3 (js/require "web3"))
 
 (defn web3 []
   (Web3. (w3/get-provider c/ethereum-rpc-url)))

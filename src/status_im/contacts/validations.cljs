@@ -1,10 +1,9 @@
 (ns status-im.contacts.validations
   (:require [cljs.spec.alpha :as s]
             [clojure.string :as str]
-            [status-im.data-store.contacts :as contacts]
-            [status-im.utils.modules :as modules]))
+            [status-im.data-store.contacts :as contacts]))
 
-(def web3 (modules/require-js "web3"))
+(def web3 (js/require "web3"))
 
 (defn is-address? [s]
   (.isAddress web3.prototype s))

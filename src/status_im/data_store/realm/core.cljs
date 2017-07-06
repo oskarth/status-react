@@ -5,11 +5,10 @@
             [taoensso.timbre :as log]
             [status-im.utils.fs :as fs]
             [clojure.string :as str]
-            [goog.string :as gstr]
-            [status-im.utils.modules :as modules])
+            [goog.string :as gstr])
   (:refer-clojure :exclude [exists?]))
 
-(def realm-class (modules/require-js "realm"))
+(def realm-class (js/require "realm"))
 
 (defn realm-version
   [file-name]

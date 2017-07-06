@@ -1,7 +1,6 @@
 (ns status-im.utils.web-provider
   (:require [taoensso.timbre :as log]
-            [status-im.components.status :as status]
-            [status-im.utils.modules :as modules]))
+            [status-im.components.status :as status]))
 
 (defn get-provider [rpc-url]
   #js {:sendAsync (fn [payload callback]
@@ -13,7 +12,7 @@
                           (log/warn :web3-response-error)
                           (callback nil (.parse js/JSON response))))))})
 
-(def web3 (modules/require-js "web3"))
+(def web3 (js/require "web3"))
 
 (defn make-web3 [rpc-url]
   (->> rpc-url

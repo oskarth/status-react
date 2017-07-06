@@ -2,10 +2,9 @@
   (:require [reagent.core :as r]
             [status-im.components.react :refer [view
                                                 touchable-highlight
-                                                list-item]]
-            [status-im.utils.modules :as modules]))
+                                                list-item]]))
 
-(def sortable-list-view-class (r/adapt-react-class (modules/require-js "react-native-sortable-listview")))
+(def sortable-list-view-class (r/adapt-react-class (js/require "react-native-sortable-listview")))
 
 (defn sortable-list-view [{:keys [on-row-moved render-row] :as props}]
   [sortable-list-view-class

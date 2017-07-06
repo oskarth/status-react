@@ -1,10 +1,9 @@
 (ns status-im.components.camera
   (:require [reagent.core :as r]
             [clojure.walk :refer [keywordize-keys]]
-            [status-im.utils.platform :as platform]
-            [status-im.utils.modules :as modules]))
+            [status-im.utils.platform :as platform]))
 
-(def camera-class (modules/require-js "react-native-camera"))
+(def camera-class (js/require "react-native-camera"))
 (def camera-default (.-default camera-class))
 
 (defn constants [t]

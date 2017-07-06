@@ -1,6 +1,5 @@
 (ns status-im.components.icons.custom-icons
-  (:require [reagent.core :as r]
-            [status-im.utils.modules :as modules]))
+  (:require [reagent.core :as r]))
 
 (def ion-icon
-  (r/adapt-react-class (.-default (modules/require-js "react-native-vector-icons/Ionicons"))))
+  (r/adapt-react-class (.-default (js/require "react-native-vector-icons/Ionicons"))))

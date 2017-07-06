@@ -17,12 +17,12 @@
             [lein-re-frisk "0.4.7"]
             [rasom/lein-externs "0.1.7"]]
   :clean-targets ["target/" "index.ios.js" "index.android.js"]
-  :aliases {"prod-build" ^{:doc "Recompile code with prod profile."}
-                         ["do" "clean"
-                          ["with-profile" "prod" "cljsbuild" "once" "ios"]
-                          ["with-profile" "prod" "cljsbuild" "once" "android"]]
+  :aliases {"prod-build"       ^{:doc "Recompile code with prod profile."}
+                               ["do" "clean"
+                                ["with-profile" "prod" "cljsbuild" "once" "ios"]
+                                ["with-profile" "prod" "cljsbuild" "once" "android"]]
             "generate-externs" ["with-profile" "prod" "externs" "android" "externs/externs.js"]
-            "test" ["doo" "phantom" "test" "once"]}
+            "test"             ["doo" "phantom" "test" "once"]}
   :test-paths ["test/clj"]
   :figwheel {:nrepl-port 7888}
   :profiles {:dev  {:dependencies [[figwheel-sidecar "0.5.8"]
@@ -56,13 +56,13 @@
                                                             :optimizations :none}}]}
                     :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]
                                    :timeout          240000}}
-             :test {:cljsbuild    {:builds [{:id           "protocol"
-                                             :source-paths ["protocol/src" "protocol/test"]
-                                             :compiler {:main          status-im.protocol.test.core
-                                                        :output-to     "target/protocol/test.js"
-                                                        :output-dir    "target/protocol"
-                                                        :optimizations :none
-                                                        :target        :nodejs}}]}}
+             :test {:cljsbuild {:builds [{:id           "protocol"
+                                          :source-paths ["protocol/src" "protocol/test"]
+                                          :compiler     {:main          status-im.protocol.test.core
+                                                         :output-to     "target/protocol/test.js"
+                                                         :output-dir    "target/protocol"
+                                                         :optimizations :none
+                                                         :target        :nodejs}}]}}
              :prod {:cljsbuild {:builds [{:id           "ios"
                                           :source-paths ["src" "protocol/src" "env/prod"]
                                           :compiler     {:output-to          "index.ios.js"
@@ -72,8 +72,7 @@
                                                          :optimize-constants true
                                                          :optimizations      :advanced
                                                          :externs            ["externs/externs.js"]
-                                                         :closure-defines    {"goog.DEBUG" false}
-                                                         :parallel-build true}}
+                                                         :closure-defines    {"goog.DEBUG" false}}}
                                          {:id           "android"
                                           :source-paths ["src" "protocol/src" "env/prod"]
                                           :compiler     {:output-to          "index.android.js"
@@ -83,5 +82,4 @@
                                                          :optimize-constants true
                                                          :optimizations      :advanced
                                                          :externs            ["externs/externs.js"]
-                                                         :closure-defines    {"goog.DEBUG" false}
-                                                         :parallel-build true}}]}}})
+                                                         :closure-defines    {"goog.DEBUG" false}}}]}}})
